@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <% include ../partials/head %>
+
+    <body>
+
+        <% include ../partials/nav %>
+
+        <!-- content for calc page -->
+        <div class="container" id="calc">
+            <div class="row">
+                <h2 class="text-center">KALKULATOR</h2>
+                <form action="calc" method="get">
+                  <fieldset>
+                      <label for="number1">Calculate two numbers:</label>
+                      <br />
+                      <input type="number" id="number1" name="number1" placeholder="first number" />
+                      <br />
+                      <input type="text" id="operation" name="operation" placeholder="+, -, *, /" />
+                      <br />
+                      <input type="number" id="number2" name="number2" placeholder="second number" />
+                      <br />
+                      <input type="submit" value="Calculate !!" />
+                  </fieldset>
+                </form>
+                    <div class="col-xs-12">
+
+                        <p> <%= wynik %> </p>
+
+                    </div>
+
+
+            </div>
+        </div><!-- end of content -->
+
+        <% include ../partials/footer %>
+
+        <% include ../partials/scripts %>
+
+    </body>
+</html>

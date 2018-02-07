@@ -1,0 +1,12 @@
+{
+	"name": "node_ejs_boilerplate",
+	"version": "1.0.0",
+	"description": "boilerplate showin the use of ejs as view template engine in a Noje.js app",
+	"author": "michal",
+	"main": "server.js",
+	"dependencies": {
+		"ejs": "^2.4.1",
+		"express": "^4.13.4",
+		"formidable": "^1.1.1"
+	}
+}

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <% include ../partials/head %>
+
+    <body>
+
+        <% include ../partials/nav %>
+
+        <section name="jumbotron"  >
+            <div class="jumbotron text-center">
+                <h1>BERMENEGILDA 1</h1>
+                <p>.......................</p>
+                <p><%= dupa_key %></p>
+                <% if(dupa_key=="dupa_value"){
+                  %>
+                  <h2>aaaaaaa</h2>
+                  <%
+                }%>
+            </div>
+        </section>
+
+        <% include ../partials/3columns %>
+
+        <% include ../partials/footer %>
+
+        <% include ../partials/scripts %>
+
+    </body>
+
+</html>
