@@ -5,8 +5,11 @@
 	"author": "michal",
 	"main": "server.js",
 	"dependencies": {
+		"body-parser": "^1.18.2",
+		"cookie-parser": "^1.4.3",
 		"ejs": "^2.4.1",
 		"express": "^4.13.4",
+		"express-session": "^1.15.6",
 		"formidable": "^1.1.1"
 	}
 }

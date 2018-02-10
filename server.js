@@ -12,47 +12,7 @@ var express = require('express');
 var routes = require('./routes/index.js');
 var port =  process.env.PORT || 3001;
 var bodyParser = require('body-parser');
-
-
-/*
-var server = http.createServer(function (req, res) {
-    if (req.method.toLowerCase() == 'get') {
-        displayForm(res);
-    } else if (req.method.toLowerCase() == 'post') {
-        processAllFieldsOfTheForm(req, res);
-    }
-
-});
-
-
-function displayForm(res) {
-    fs.readFile('/public/pages/index.ejs', function (err, data) {
-        res.writeHead(200, {
-            'Content-Type': 'text/html',
-                'Content-Length': data.length
-        });
-        res.write(data);
-        res.end();
-    });
-}
-
-function processAllFieldsOfTheForm(req, res) {
-    var form = new formidable.IncomingForm();
-
-    form.parse(req, function (err, fields, files) {
-        //Store the data from the fields in your data store.
-        //The data store could be a file or database or any other store based
-        //on your application.
-        res.writeHead(200, {
-            'content-type': 'text/plain'
-        });
-        res.write('received the data:\n\n');
-        res.end(util.inspect({
-            fields: fields,
-            files: files
-        }));
-    });
-}*/
+var session = require('express-session');
 
 
 var app = express();
@@ -60,7 +20,20 @@ var app = express();
 //------- setup express app
 app.use('/public', express.static(process.cwd() + '/public'));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+//app.use(bodyParser.urlencoded({ extended : false }));
 app.set('view engine', 'ejs');
+
+
+app.use(session({
+    secret: 'keyboard cat',
+    //cookie: { maxAge: 60000 },
+    //name: cookie_name,
+    //store: sessionStore, // connect-mongo session store
+    //proxy: true,
+    resave: true,
+    saveUninitialized: true
+}));
 
 //------- setup routes
 routes(app);

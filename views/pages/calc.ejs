@@ -11,6 +11,7 @@
         <div class="container" id="calc">
             <div class="row">
                 <h2 class="text-center">KALKULATOR</h2>
+                <!--
                 <form action="calc" method="get">
                   <fieldset>
                       <label for="number1">Calculate two numbers:</label>
@@ -23,10 +24,37 @@
                       <br />
                       <input type="submit" value="Calculate !!" />
                   </fieldset>
+                </form>  -->
+
+                <form action="calc" method="post">
+                  <fieldset>
+                      <br />
+                      <br />
+                      <label for="number1">real calculator:</label>
+                      <br />
+                      <input type="number" id="inputNumber" name="inputNumber" placeholder="number here" />
+                      <br />
+                      <button type="submit" class="btn btn-primary btn-lg" formaction="/calc/plus">Add</button>
+                      <button type="submit" class="btn btn-primary btn-lg" formaction="/calc/minus">Substr</button>
+                      <button type="submit" class="btn btn-primary btn-lg" formaction="/calc/multi">Mult</button>
+                      <button type="submit" class="btn btn-primary btn-lg" formaction="/calc/divide">Div</button> 
+                      <br />
+                      <br />
+
+                      <p>
+
+                        <%= wynik2  %> 
+                      <br /><br /> 
+                        <%= wynik %>
+                       
+                      </p>
+                  </fieldset>
                 </form>
                     <div class="col-xs-12">
 
-                        <p> <%= wynik %> </p>
+                        
+
+                        
 
                     </div>
 
