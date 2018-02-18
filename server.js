@@ -10,7 +10,7 @@ var fs = require('fs');
 var util = require('util');
 var express = require('express');
 var routes = require('./routes/index.js');
-var port =  process.env.PORT || 3001;
+var port = process.env.PORT || 3001;
 var bodyParser = require('body-parser');
 var session = require('express-session');
 
@@ -42,7 +42,3 @@ routes(app);
 app.listen(port, function() {
   console.log('Server listening on port ' + port + '.........');
 });
-//http.createServer(app).listen(app.get(port), '0.0.0.0', function() {
-//    console.log('Express server listening on port ' + app.get('port'));
-//});
-

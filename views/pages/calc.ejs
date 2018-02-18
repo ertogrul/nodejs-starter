@@ -34,30 +34,67 @@
                       <br />
                       <input type="number" id="inputNumber" name="inputNumber" placeholder="number here" />
                       <br />
+                      <br />
                       <button type="submit" class="btn btn-primary btn-lg" formaction="/calc/plus">Add</button>
                       <button type="submit" class="btn btn-primary btn-lg" formaction="/calc/minus">Substr</button>
                       <button type="submit" class="btn btn-primary btn-lg" formaction="/calc/multi">Mult</button>
                       <button type="submit" class="btn btn-primary btn-lg" formaction="/calc/divide">Div</button> 
-                      <br />
-                      <br />
 
+                      <button type="submit" class="btn btn-primary btn-lg" formaction="/calc/AC">AC</button>
+                      <button type="submit" class="btn btn-primary btn-lg" formaction="/calc/MS">MS</button><!--
+                      <button type="submit" class="btn btn-primary btn-lg" formaction="/calc/multi">Mult</button>
+                      <button type="submit" class="btn btn-primary btn-lg" formaction="/calc/divide">Div</button> -->
+                      <br />
+                      
                       <p>
-
-                        <%= wynik2  %> 
-                      <br /><br /> 
+                      <br />
+                      <br /> 
                         <%= wynik %>
-                       
                       </p>
+                      <p><br /> 
+                        <h5> memory: </h5>
+                        <%= memo %>
+                      </p>
+                      <br /><br /><br />
+                      <br />
+                      <label for="number1">'web scraping' calculator:</label>
+                      <br />
+                      <input type="text" id="inputQuery" name="inputQuery" placeholder="operation here" />
+                      <br />
+                      <br />
+                      <button type="submit" class="btn btn-primary btn-lg" formaction="/calc/webquery">Query</button>
+                      <br />
+                      <br />
+                      <p> 
+                        <%= wynik2 %>
+                      </p>
+
+
+
+
+
                   </fieldset>
                 </form>
-                    <div class="col-xs-12">
+               <!--     
+                <form action="" method="post">
+                  <fieldset>
+                      <br />
+                      <br />
+                      <label for="number1">'web scraping' calculator:</label>
+                      <br />
+                      <input type="text" id="inputQuery" name="inputQuery" placeholder="operation here" />
+                      <br />
+                      <br />
+                      <button type="submit" class="btn btn-primary btn-lg" formaction="/calc/webquery">Query</button>
+                      <br />
+                      <br />
+                      <p><br /><br /> 
+                        <%= wynik2 %>
+                      </p>
+                  </fieldset>
+                </form> -->
 
-                        
-
-                        
-
-                    </div>
-
+                <div class="col-xs-12"></div>
 
             </div>
         </div><!-- end of content -->
