@@ -78,7 +78,7 @@ module.exports = function(app) {
     app.post('/calc/MS', function(req, res) {
         console.log(" Memory Store Button ");
         var zm1 = req.session;
-        zm1.memo = req.session.get(wynik); <--------------------- JAK ZROBIC GET TO MIEJSCA WYNIK ???????
+        zm1.memo = req.session.get(wynik); //<--------------------- JAK ZROBIC GET TO MIEJSCA WYNIK ???????
         console.log(zm1.memo);
         //var zm1 = req.session;
         //zm1.liczba = Number(req.body.inputNumber);
