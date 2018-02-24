@@ -68,6 +68,7 @@ module.exports = function(app) {
 
     app.post('/calc/AC', function(req, res) {
         console.log(" AC button:" + req.body.inputNumber);
+        req.session.liczba = 0
         res.render('pages/calc', {
            wynik: 0,
            memo: 0,
