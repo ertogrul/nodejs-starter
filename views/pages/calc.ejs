@@ -42,21 +42,48 @@
 
                       <button type="submit" class="btn btn-primary btn-primary" formaction="/calc/AC">AC(cancel)</button>
                       <button type="submit" class="btn btn-primary btn-danger" formaction="/calc/MS">MStore</button>
-                      <button type="submit" class="btn btn-primary btn-danger" formaction="/calc/MR">MRecall</button><!--
-                      <button type="submit" class="btn btn-primary btn-lg" formaction="/calc/divide">Div</button> -->
+                      <button type="submit" class="btn btn-primary btn-danger" formaction="/calc/MC">MClear</button>
+                      <button type="submit" class="btn btn-primary btn-danger" formaction="/calc/MPlus">M+</button>
+                      <button type="submit" class="btn btn-primary btn-danger" formaction="/calc/MMinus">M-</button>
+                      <br />
                       <br />
                       <p>
-                      <br />
-                      <br /> 
-                        <%= wynik %>
+                        <%= wynik %><h5> 
                       </p>
-                      <p><br /> 
+                      
+                      
+                      <p> 
                         <h5> memory: </h5>
                         <%= memo %>
                       </p>
-                      <br /><br /><br />
+
+                      <button type="submit" class="btn btn-primary btn-default" formaction="/calc/BSeven">_7_</button>
+                      <button type="submit" class="btn btn-primary btn-default" formaction="/calc/BEight">_8_</button>
+                      <button type="submit" class="btn btn-primary btn-default" formaction="/calc/BNine">_9_</button>
                       <br />
-                      <label for="number1">'web scraping' calculator:</label>
+                      <br />
+                      <button type="submit" class="btn btn-primary btn-default" formaction="/calc/BFour">_4_</button>
+                      <button type="submit" class="btn btn-primary btn-default" formaction="/calc/BFive">_5_</button>
+                      <button type="submit" class="btn btn-primary btn-default" formaction="/calc/BSix">_6_</button>
+                      <br />
+                      <br />
+                      <button type="submit" class="btn btn-primary btn-default" formaction="/calc/BOne">_1_</button>
+                      <button type="submit" class="btn btn-primary btn-default" formaction="/calc/BTwo">_2_</button>
+                      <button type="submit" class="btn btn-primary btn-default" formaction="/calc/BThree">_3_</button>
+                      <br />
+                      <br />
+                      <button type="submit" class="btn btn-primary btn-default" formaction="/calc/BZero">_0_</button>
+                      <button type="submit" class="btn btn-primary btn-default" formaction="/calc/BDot">_._</button>
+                      <button type="submit" class="btn btn-primary btn-danger" formaction="/calc/BEquals">_=_</button>
+                      <br />
+                      <br />
+                      
+                      <!--
+                      <button type="submit" class="btn btn-primary btn-lg" formaction="/calc/divide">Div</button> -->
+                  
+                      <br />
+                      
+                      <label for="number1">'web scraping' calculator: (utilizing ecosia.org search engine)</label>
                       <br />
                       <input type="text" id="inputQuery" name="inputQuery" placeholder="operation here" />
                       <br />
