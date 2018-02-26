@@ -145,60 +145,61 @@ M- > Subtracts the currently displayed number from the number in memory
 
     app.post('/calc/webquery', function(req, res) { 
         console.log("webscraping " + req.body.inputQuery);
-        req.session.webquery = req.body.inputQuery;        
-        //rozdzielić "3+4" na "3" "+" "7"
+
         var myQuery;
         var myQueryInput;
-        var myResult;
-        if (req.session.webquery.includes("+")) {
-            myQuery = req.session.webquery.split("+");
+        var myQueryResult;
+        if (req.body.inputQuery.includes("+")) {
+            myQuery = req.body.inputQuery.split("+");
             myQuery.push("%2B");
             myQueryInput = "https://www.ecosia.org/search?q=" + myQuery[0] + myQuery[2] + myQuery[1];
 
         }
-        if (req.session.webquery.includes("-")) {
-            myQuery = req.session.webquery.split("-");
+        if (req.body.inputQuery.includes("-")) {
+            myQuery = req.body.inputQuery.split("-");
             myQuery.push("-");
             myQueryInput = "https://www.ecosia.org/search?q=" + myQuery[0] + "+" + myQuery[2] + "+" + myQuery[1];
         }
-        if (req.session.webquery.includes("*")) {
-            myQuery = req.session.webquery.split("*");
+        if (req.body.inputQuery.includes("*")) {
+            myQuery = req.body.inputQuery.split("*");
             myQuery.push("*");
             myQueryInput = "https://www.ecosia.org/search?q=" + myQuery[0] + "+" + myQuery[2] + "+" + myQuery[1];
         }
-        if (req.session.webquery.includes("/")) {
-            myQuery = req.session.webquery.split("/");
+        if (req.body.inputQuery.includes("/")) {
+            myQuery = req.body.inputQuery.split("/");
             myQuery.push("/");
             myQueryInput = "https://www.ecosia.org/search?q=" + myQuery[0] + "+" + myQuery[2] + "+" + myQuery[1];
         }
         
-        console.log(myQuery);
-        console.log(myQueryInput);
-        
+        console.log("My Query Input: " + myQueryInput);
+
         osmosis
             .get(myQueryInput)
             //.find('.col-sm-12 p')
             .find('.col-sm-12 .widget-result')
             .set('result')
             .data(console.log)
-        
+            .data(function (listing) {
+                console.log("A: " + listing.result)   
+                req.session.webquery = listing.result; 
+                console.log("session.webquery" + req.session.webquery)
+                
+                res.render('pages/calc', {
+                    wynik: req.session.liczba,
+                    memo: req.session.memo,
+                    wynik2: req.session.webquery
+                }); 
+            });
 
-        console.log("process.argv " + process.argv[0]);
-        console.log("process.argv " + process.argv[1]);
-        console.log("process.argv " + process.argv[2]);
-        console.log("process.argv " + process.argv[3]);
-        console.log("process.argv " + process.argv[4]);
-        
-
-
-
-
+            });
+/*
         res.render('pages/calc', {
             wynik: req.session.liczba,
             memo: req.session.memo,
             wynik2: req.session.webquery
-        });
+        }); 
     });
+*/
 
     // NUMBER BUTTONS
     app.post('/calc/BSeven', function(req, res) {
