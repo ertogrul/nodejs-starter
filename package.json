@@ -5,6 +5,7 @@
 	"author": "michal",
 	"main": "server.js",
 	"dependencies": {
+		"bl": "^1.2.1",
 		"body-parser": "^1.18.2",
 		"cookie-parser": "^1.4.3",
 		"ejs": "^2.4.1",

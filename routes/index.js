@@ -1,5 +1,8 @@
 'use strict';
+const http = require('http')
 const osmosis = require('osmosis');
+
+
 
 module.exports = function(app) {
     app.get('/', function(req, res) {
@@ -15,13 +18,15 @@ module.exports = function(app) {
     app.get('/calc', function(req, res) {
         //req.session.liczba = 0;
         req.session.liczba = ""
-        req.session.memo = 0;  
+        req.session.memo = 0
         req.session.webquery = 0
+        req.session.webquery2 = 0
         req.session.operation = ""
         res.render('pages/calc', {
             wynik: 0,
             memo: 0, 
-            wynik2: 0
+            wynik2: 0,
+            wynik3: req.session.webquery2
         });
     });
     
@@ -34,7 +39,8 @@ module.exports = function(app) {
         res.render('pages/calc', {
            wynik: req.session.liczba,
            memo: req.session.memo,
-           wynik2: req.session.webquery
+           wynik2: req.session.webquery,
+           wynik3: req.session.webquery2
         });
     });
 
@@ -45,7 +51,8 @@ module.exports = function(app) {
         res.render('pages/calc', {
            wynik: req.session.liczba,
            memo: req.session.memo,
-           wynik2: req.session.webquery
+           wynik2: req.session.webquery,
+           wynik3: req.session.webquery2
         });
     });
 
@@ -56,7 +63,8 @@ module.exports = function(app) {
         res.render('pages/calc', {
            wynik: req.session.liczba,
            memo: req.session.memo,
-           wynik2: req.session.webquery
+           wynik2: req.session.webquery,
+           wynik3: req.session.webquery2
         });
     });
 
@@ -67,7 +75,8 @@ module.exports = function(app) {
         res.render('pages/calc', {
            wynik: req.session.liczba,
            memo: req.session.memo,
-           wynik2: req.session.webquery
+           wynik2: req.session.webquery,
+           wynik3: req.session.webquery2
         });
     });
 
@@ -78,7 +87,8 @@ module.exports = function(app) {
         res.render('pages/calc', {
            wynik: req.session.liczba,
            memo: req.session.memo,
-           wynik2: req.session.webquery
+           wynik2: req.session.webquery,
+           wynik3: req.session.webquery2
         });
     });
 /*
@@ -101,7 +111,8 @@ M- > Subtracts the currently displayed number from the number in memory
         res.render('pages/calc', {
            wynik: req.session.liczba,
            memo: req.session.memo,
-           wynik2: req.session.webquery
+           wynik2: req.session.webquery,
+           wynik3: req.session.webquery2
         });
     });
 
@@ -111,7 +122,8 @@ M- > Subtracts the currently displayed number from the number in memory
         res.render('pages/calc', {
            wynik: req.session.liczba,
            memo: req.session.memo,
-           wynik2: req.session.webquery
+           wynik2: req.session.webquery,
+           wynik3: req.session.webquery2
         });
     });
 
@@ -124,7 +136,8 @@ M- > Subtracts the currently displayed number from the number in memory
         res.render('pages/calc', {
            wynik: req.session.liczba,
            memo: req.session.memo,
-           wynik2: req.session.webquery
+           wynik2: req.session.webquery,
+           wynik3: req.session.webquery2
         });
     });
 
@@ -137,9 +150,80 @@ M- > Subtracts the currently displayed number from the number in memory
         res.render('pages/calc', {
            wynik: req.session.liczba,
            memo: req.session.memo,
-           wynik2: req.session.webquery
+           wynik2: req.session.webquery,
+           wynik3: req.session.webquery2
         });
     });
+
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+    app.post('/calc/webquery2', function(req, res) {
+        var myQuery;
+        var myQueryInput;
+        var myQueryResult;
+        var response;
+        var url;
+
+        console.log(" web scraping with http.request ");
+        req.session.webquery2 = req.body.inputQuery2;
+        if (req.body.inputQuery2.includes("+")) {
+            myQuery = req.body.inputQuery2.split("+");
+            myQuery.push("%2B");
+            myQueryInput = "http://www.ecosia.org/search?q=" + myQuery[0] + myQuery[2] + myQuery[1];
+        }
+
+        
+        const bl = require('bl');
+        
+        http.get(process.argv[2], function (response) {
+            response.pipe(bl(function (err, data) {
+                if (err) {
+                    return console.error(err)
+                }
+                data = data.toString()
+                console.log(data.length)
+                console.log(data)
+            }))
+        })
+        /*
+        url = myQueryInput
+        console.log("url: " + url)
+        http.get(url, function(response){
+            var result = "";
+            response.setEncoding("utf-8");
+            response.on("data", function(data){
+                result += data;
+                console.log("data: " + data)
+            });
+        
+            response.on("end", function(){
+                console.log("result.length: " + result.length);
+                console.log("result: " + result);
+            });
+
+        });
+        */
+        /*
+        http.get(url, function (response) {
+            response.setEncoding('utf8')
+            response.on('data', function (data) {
+            console.log(data);
+            })
+        });*/
+    
+
+        
+        res.render('pages/calc', {
+           wynik: req.session.liczba,
+           memo: req.session.memo,
+           wynik2: req.session.webquery,
+           wynik3: req.session.webquery2
+        });
+    });
+
+
 
 
 
@@ -187,7 +271,8 @@ M- > Subtracts the currently displayed number from the number in memory
                 res.render('pages/calc', {
                     wynik: req.session.liczba,
                     memo: req.session.memo,
-                    wynik2: req.session.webquery
+                    wynik2: req.session.webquery,
+                    wynik3: req.session.webquery2
                 }); 
             });
 
@@ -209,7 +294,8 @@ M- > Subtracts the currently displayed number from the number in memory
         res.render('pages/calc', {
             wynik: req.session.liczba = req.session.operation,
             memo: req.session.memo,
-            wynik2: req.session.webquery
+            wynik2: req.session.webquery,
+            wynik3: req.session.webquery2
         });
     });
     app.post('/calc/BEight', function(req, res) {
@@ -219,7 +305,8 @@ M- > Subtracts the currently displayed number from the number in memory
         res.render('pages/calc', {
             wynik: req.session.liczba = req.session.operation,
             memo: req.session.memo,
-            wynik2: req.session.webquery
+            wynik2: req.session.webquery,
+            wynik3: req.session.webquery2
         });
     });
     app.post('/calc/BNine', function(req, res) {
@@ -228,7 +315,8 @@ M- > Subtracts the currently displayed number from the number in memory
         res.render('pages/calc', {
             wynik: req.session.liczba = req.session.operation,
             memo: req.session.memo,
-            wynik2: req.session.webquery
+            wynik2: req.session.webquery,
+            wynik3: req.session.webquery2
         });
     });
     app.post('/calc/BFour', function(req, res) {
@@ -237,7 +325,8 @@ M- > Subtracts the currently displayed number from the number in memory
         res.render('pages/calc', {
             wynik: req.session.liczba = req.session.operation,
             memo: req.session.memo,
-            wynik2: req.session.webquery
+            wynik2: req.session.webquery,
+            wynik3: req.session.webquery2
         });
     });
     app.post('/calc/BFive', function(req, res) {
@@ -246,7 +335,8 @@ M- > Subtracts the currently displayed number from the number in memory
         res.render('pages/calc', {
             wynik: req.session.liczba = req.session.operation,
             memo: req.session.memo,
-            wynik2: req.session.webquery
+            wynik2: req.session.webquery,
+            wynik3: req.session.webquery2
         });
     });
     app.post('/calc/BSix', function(req, res) {
@@ -255,7 +345,8 @@ M- > Subtracts the currently displayed number from the number in memory
         res.render('pages/calc', {
             wynik: req.session.liczba = req.session.operation,
             memo: req.session.memo,
-            wynik2: req.session.webquery
+            wynik2: req.session.webquery,
+            wynik3: req.session.webquery2
         });
     });
     app.post('/calc/BOne', function(req, res) {
@@ -264,7 +355,8 @@ M- > Subtracts the currently displayed number from the number in memory
         res.render('pages/calc', {
             wynik: req.session.liczba = req.session.operation,
             memo: req.session.memo,
-            wynik2: req.session.webquery
+            wynik2: req.session.webquery,
+            wynik3: req.session.webquery2
         });
     });
     app.post('/calc/BTwo', function(req, res) {
@@ -273,7 +365,8 @@ M- > Subtracts the currently displayed number from the number in memory
         res.render('pages/calc', {
             wynik: req.session.liczba = req.session.operation,
             memo: req.session.memo,
-            wynik2: req.session.webquery
+            wynik2: req.session.webquery,
+            wynik3: req.session.webquery2
         });
     });
     app.post('/calc/BThree', function(req, res) {
@@ -282,7 +375,8 @@ M- > Subtracts the currently displayed number from the number in memory
         res.render('pages/calc', {
             wynik: req.session.liczba = req.session.operation,
             memo: req.session.memo,
-            wynik2: req.session.webquery
+            wynik2: req.session.webquery,
+            wynik3: req.session.webquery2
         });
     });
     app.post('/calc/BZero', function(req, res) {
@@ -291,7 +385,8 @@ M- > Subtracts the currently displayed number from the number in memory
         res.render('pages/calc', {
             wynik: req.session.liczba = req.session.operation,
             memo: req.session.memo,
-            wynik2: req.session.webquery
+            wynik2: req.session.webquery,
+            wynik3: req.session.webquery2
         });
     });
     app.post('/calc/BDot', function(req, res) {
@@ -300,7 +395,8 @@ M- > Subtracts the currently displayed number from the number in memory
         res.render('pages/calc', {
             wynik: req.session.liczba = req.session.operation,
             memo: req.session.memo,
-            wynik2: req.session.webquery
+            wynik2: req.session.webquery,
+            wynik3: req.session.webquery2
         });
     });
     app.post('/calc/BEquals', function(req, res) {
@@ -310,7 +406,8 @@ M- > Subtracts the currently displayed number from the number in memory
         res.render('pages/calc', {
             wynik: req.session.liczba,
             memo: req.session.memo,
-            wynik2: req.session.webquery
+            wynik2: req.session.webquery,
+            wynik3: req.session.webquery2
         });
     });
 
