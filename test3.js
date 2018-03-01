@@ -10,7 +10,7 @@ http.get("http://www.example.org/", response => {
 
 http.request({
    //host: "www.example.org",
-   host: 'http://www.ecosia.org',
+   host: 'http://www.google.com',
    //host: 'www.google.com',
    method: 'GET',
    //path: "/?q=5*7"
