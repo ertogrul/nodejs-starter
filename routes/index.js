@@ -158,7 +158,7 @@ M- > Subtracts the currently displayed number from the number in memory
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
+//number of queries to google: 8
     app.post('/calc/webquery2', function(req, res) {
         var myQuery;
         var myQueryInput;
@@ -171,93 +171,73 @@ M- > Subtracts the currently displayed number from the number in memory
         if (req.body.inputQuery2.includes("+")) {
             myQuery = req.body.inputQuery2.split("+");
             myQuery.push("%2B");
-            myQueryInput = "http://www.ecosia.org/search?q=" + myQuery[0] + myQuery[2] + myQuery[1];
+            myQueryInput = "http://www.google.pl/search?dcr=0&source=hp&q=" + myQuery[0] + myQuery[2] + myQuery[1];
+        }
+
+
+
+        function letsReg (callback) {
+            http.get(myQueryInput, (res) => {
+                const { statusCode } = res;
+                const contentType = res.headers['content-type'];
+                let error;
+                if (statusCode !== 200) {
+                    error = new Error('Request Failed.\n' +
+                                    `Status Code: ${statusCode}`);
+                }
+                if (error) {
+                    console.error(error.message);
+                    // consume response data to free up memory
+                    res.resume();
+                    return;
+                }
+                res.setEncoding('utf8');
+                let rawData = '';
+                res.on('data', (chunk) => { rawData += chunk; });
+                res.on('end', () => {
+                    try {
+                    console.log(rawData);
+                    var dataString = rawData.toString();
+                    var regex = /\d+\s.\s\d+\s\B=\s\d+/;
+                    //var regex2 = /\d+\s.\s\d+\s\B=\s\d+\B�\d+/;
+                    //�
+                    //regex: a + b = c
+                    
+                    var calcResult = dataString.match(regex);
+                    console.log("calcResult: " + calcResult);
+                    //console.log("calcResult[0]" + calcResult[0]);
+                    req.session.webquery2 = calcResult;
+                    callback();
+
+
+                    } catch (e) {
+                    console.error(e.message);
+                    }
+                });
+                }).on('error', (e) => {
+                console.error(`Got error: ${e.message}`);
+            });
+        }
+
+        function letsRender () {
+            res.render('pages/calc', {
+                wynik: req.session.liczba,
+                memo: req.session.memo,
+                wynik2: req.session.webquery,
+                wynik3: req.session.webquery2
+             });
+            //console.log(contents);
         }
         
-        http.get(myQueryInput, (res) => {
-            const { statusCode } = res;
-            const contentType = res.headers['content-type'];
-            let error;
-            if (statusCode !== 200) {
-                error = new Error('Request Failed.\n' +
-                                `Status Code: ${statusCode}`);
-            }
-            if (error) {
-                console.error(error.message);
-                // consume response data to free up memory
-                res.resume();
-                return;
-            }
-            res.setEncoding('utf8');
-            let rawData = '';
-            res.on('data', (chunk) => { rawData += chunk; });
-            res.on('end', () => {
-                try {
-                console.log(rawData);
-                var dataString = rawData.toString();
-                var regex = /\d+\s.\s\d+\s\B=\s\d+/;
-                //regex: a + b = c
-                var calcResult = dataString.match(regex);
-                console.log(calcResult)
-                console.log(calcResult[0])
-                } catch (e) {
-                console.error(e.message);
-                }
-            });
-            }).on('error', (e) => {
-            console.error(`Got error: ${e.message}`);
-        });
-
-
-
-        /*
-        const bl = require('bl');
+        letsReg(letsRender);
         
-        http.get(process.argv[2], function (response) {
-            response.pipe(bl(function (err, data) {
-                if (err) {
-                    return console.error(err)
-                }
-                data = data.toString()
-                console.log(data.length)
-                console.log(data)
-            }))
-        })
-        */
         /*
-        url = myQueryInput
-        console.log("url: " + url)
-        http.get(url, function(response){
-            var result = "";
-            response.setEncoding("utf-8");
-            response.on("data", function(data){
-                result += data;
-                console.log("data: " + data)
-            });
-        
-            response.on("end", function(){
-                console.log("result.length: " + result.length);
-                console.log("result: " + result);
-            });
-
-        });
-        */
-        /*
-        http.get(url, function (response) {
-            response.setEncoding('utf8')
-            response.on('data', function (data) {
-            console.log(data);
-            })
-        });*/
-    
-
-        
         res.render('pages/calc', {
            wynik: req.session.liczba,
            memo: req.session.memo,
            wynik2: req.session.webquery,
            wynik3: req.session.webquery2
-        });
+        });*/
     });
 
 
@@ -301,9 +281,9 @@ M- > Subtracts the currently displayed number from the number in memory
             .set('result')
             .data(console.log)
             .data(function (listing) {
-                console.log("A: " + listing.result)   
+                console.log("A: " + listing.result);   
                 req.session.webquery = listing.result; 
-                console.log("session.webquery" + req.session.webquery)
+                console.log("session.webquery" + req.session.webquery);
                 
                 res.render('pages/calc', {
                     wynik: req.session.liczba,
