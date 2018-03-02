@@ -13,17 +13,7 @@ fs.readFile(file, function (err, contents) {
     
     var regex = /\d+\s.\s\d+\s\B=\s\d+/;
     //regex: a + b = c
-    var s = "you can enter maximum 500234234 + 4324234 = 2342340999 choices";
-    var ss = contentsString.match(regex);
-    console.log(ss)
-    console.log(ss[0])
-   
-
-
-
-
-
-
-
-
+    var calcResult = contentsString.match(regex);
+    console.log(calcResult);
+    console.log(calcResult[0]);
   })

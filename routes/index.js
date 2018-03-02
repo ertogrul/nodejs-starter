@@ -167,14 +167,50 @@ M- > Subtracts the currently displayed number from the number in memory
         var url;
 
         console.log(" web scraping with http.request ");
-        req.session.webquery2 = req.body.inputQuery2;
+        //req.session.webquery2 = req.body.inputQuery2;
         if (req.body.inputQuery2.includes("+")) {
             myQuery = req.body.inputQuery2.split("+");
             myQuery.push("%2B");
             myQueryInput = "http://www.ecosia.org/search?q=" + myQuery[0] + myQuery[2] + myQuery[1];
         }
-
         
+        http.get(myQueryInput, (res) => {
+            const { statusCode } = res;
+            const contentType = res.headers['content-type'];
+            let error;
+            if (statusCode !== 200) {
+                error = new Error('Request Failed.\n' +
+                                `Status Code: ${statusCode}`);
+            }
+            if (error) {
+                console.error(error.message);
+                // consume response data to free up memory
+                res.resume();
+                return;
+            }
+            res.setEncoding('utf8');
+            let rawData = '';
+            res.on('data', (chunk) => { rawData += chunk; });
+            res.on('end', () => {
+                try {
+                console.log(rawData);
+                var dataString = rawData.toString();
+                var regex = /\d+\s.\s\d+\s\B=\s\d+/;
+                //regex: a + b = c
+                var calcResult = dataString.match(regex);
+                console.log(calcResult)
+                console.log(calcResult[0])
+                } catch (e) {
+                console.error(e.message);
+                }
+            });
+            }).on('error', (e) => {
+            console.error(`Got error: ${e.message}`);
+        });
+
+
+
+        /*
         const bl = require('bl');
         
         http.get(process.argv[2], function (response) {
@@ -187,6 +223,7 @@ M- > Subtracts the currently displayed number from the number in memory
                 console.log(data)
             }))
         })
+        */
         /*
         url = myQueryInput
         console.log("url: " + url)
